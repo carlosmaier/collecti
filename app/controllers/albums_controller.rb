@@ -8,7 +8,7 @@ class AlbumsController < ApplicationController
   def index
     matching_albums = Album.all
 
-    @list_of_albums = matching_albums.order({ :created_at => :desc })
+    @list_of_albums = matching_albums.order({ :created_at => :asc })
 
     render({ :template => "albums/index.html.erb" })
   end

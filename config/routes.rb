@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  # Home
+
+  get("/", { :controller => "albums", :action => "index" })        
+
   # Routes for the User account:
 
   # SIGN UP FORM
@@ -64,7 +68,5 @@ Rails.application.routes.draw do
   get("/delete_album/:path_id", { :controller => "albums", :action => "destroy" })
 
   #------------------------------
-
-  get("/", { :controller => "albums", :action => "home" })  
 
 end
