@@ -1,7 +1,7 @@
 <div>
   <div>
     <h1>
-      Find your album
+      Your albums
     </h1>
   </div>
 </div>
@@ -44,8 +44,8 @@
         </td>
 
         <td>
-          <a href="/link_collection/<%= an_album.id %>">
-            Add album
+          <a href="/albums/<%= an_album.id %>">
+            Enter your collection
           </a>
         </td>
       </tr>
@@ -58,31 +58,9 @@
 
 <div>
   <div>
-    <h2>
-      Add a new album (ADMIN)
-    </h2>
-
-    <form action="/insert_album" method="post">
-      <div>
-        <label for="name_box">
-          Name
-        </label>
-
-        <input type="text" id="name_box" name="query_name">
-      </div>
-
-      <div>
-        <label for="cards_box">
-          Cards
-        </label>
-
-        <input type="text" id="cards_box" name="query_cards">
-      </div>
-
-      <button>
-        Create album
-      </button>
-    </form>
+    <h3>
+      <a href="/albums/all_albums">Add another album?</a> Selector and button instead?
+    </h3>
   </div>
 </div>
 

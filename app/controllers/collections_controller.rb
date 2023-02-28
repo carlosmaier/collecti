@@ -17,6 +17,21 @@ class CollectionsController < ApplicationController
     render({ :template => "collections/show.html.erb" })
   end
 
+  def link
+    the_collection = Collection.new
+    the_collection.id_user = params.fetch("query_id_user")
+    the_collection.id_album = params.fetch("path_id")
+    the_collection.card_number = 0
+
+    if the_collection.valid?
+      the_collection.save
+      redirect_to("/collections", { :notice => "Collection created successfully." })
+    else
+      redirect_to("/collections", { :alert => the_collection.errors.full_messages.to_sentence })
+    end
+  end
+
+
   def create
     the_collection = Collection.new
     the_collection.id_user = params.fetch("query_id_user")

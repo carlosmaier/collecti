@@ -1,7 +1,7 @@
 <div>
   <div>
     <h1>
-      Album #<%= @the_album.id %> details
+      <%= @the_album.name %>
     </h1>
 
     <div>
@@ -10,48 +10,72 @@
           Go back
         </a>
       </div>
-
-      <div>
-        <a href="/delete_album/<%= @the_album.id %>">
-          Delete album
-        </a>
-      </div>
     </div>
-
-    <dl>
-      <dt>
-        Name
-      </dt>
-      <dd>
-        <%= @the_album.name %>
-      </dd>
-
-      <dt>
-        Cards
-      </dt>
-      <dd>
-        <%= @the_album.cards %>
-      </dd>
-
-      <dt>
-        Created at
-      </dt>
-      <dd>
-        <%= time_ago_in_words(@the_album.created_at) %> ago
-      </dd>
-
-      <dt>
-        Updated at
-      </dt>
-      <dd>
-        <%= time_ago_in_words(@the_album.updated_at) %> ago
-      </dd>
-    </dl>
   </div>
 </div>
 
 <hr>
 
+<div>
+  <div>
+    <h2></h2>
+    <table border="1">
+      <tr>
+        <th>
+          # Card
+        </th>
+
+        <th>
+          Cards you own
+        </th>
+
+        <th>
+          Get card from:
+        </th>
+
+        <th>
+          Add card
+        </th>
+
+        <th>
+          Subtract card
+        </th>
+      </tr>
+
+      <% @the_album.cards.times do |a_card| %>
+      <tr>
+        <td>
+          <% card_number = a_card + 1 %>
+          <%= card_number.to_s %>
+        </td>
+
+        <td>
+          XXX <%=  %>
+        </td>
+
+        <td>
+          3 users<%=  %>
+        </td>
+
+        <td>
+          <a href="/albums/substract_card/<%= card_number %>">
+            +
+          </a>
+        </td>
+
+        <td>
+          <a href="/albums/substract_card/<%= card_number %>">
+            -
+          </a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+
+<hr>
 
 <div>
   <div>
@@ -79,6 +103,12 @@
       <button>
         Update album
       </button>
+      
+      <div>
+        <a href="/delete_album/<%= @the_album.id %>">
+          Delete album
+        </a>
+      </div>
     </form>
   </div>
 </div>

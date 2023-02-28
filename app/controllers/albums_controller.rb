@@ -4,7 +4,6 @@ class AlbumsController < ApplicationController
     render({ :template => "albums/index.html.erb" })
   end
 
-
   def index
     matching_albums = Album.all
 
@@ -59,4 +58,5 @@ class AlbumsController < ApplicationController
 
     redirect_to("/albums", { :notice => "Album deleted successfully."} )
   end
+
 end
