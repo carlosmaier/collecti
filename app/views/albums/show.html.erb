@@ -17,7 +17,7 @@
 <hr>
   
   <div>
-    <h4>Cards to complete album: <%= %> | Progress: <%= %>%</h4>
+    <h4>Cards to complete album: <%= @the_album.cards - @list_of_cards.uniq.count %> | Completion: <%= 100*@list_of_cards.uniq.count/@the_album.cards  %>%</h4>
     <form action="/insert_collection" method="post">
       <div>
         <label for="id_user_box"></label>
@@ -82,9 +82,9 @@
         </td>
 
         <td>
-          <% collectors_card = @list_of_collections.where({ card_number: card_number }).map_relation_to_array(:id_user) %>
+          <% collectors_card = @list_of_collections.where({ card_number: card_number }).where.not({ id_user: session[:user_id]}).map_relation_to_array(:id_user) %>
           <% collectors_repeated_card = collectors_card.find_all { |e| collectors_card.count(e) > 1 } %>
-          <% number_of_collectors_repeated = collectors_repeated_card.count %>
+          <% number_of_collectors_repeated = collectors_repeated_card.uniq.count %>
           <% if number_of_collectors_repeated != 0 %>
               <%= number_of_collectors_repeated %> users
           <% else %>
@@ -93,8 +93,8 @@
         </td>
 
         <td>
-          <% if @list_of_collectors.uniq.count - @list_of_collections.where({ card_number: card_number }).map_relation_to_array(:id_user).uniq.count != 0 %>
-            <%= @list_of_collectors.uniq.count - @list_of_collections.where({ card_number: card_number }).map_relation_to_array(:id_user).uniq.count %> users
+          <% if @list_of_collectors.uniq.count + 1 - @list_of_collections.where({ card_number: card_number }).map_relation_to_array(:id_user).uniq.count != 0 %>
+            <%= @list_of_collectors.uniq.count + 1 - @list_of_collections.where({ card_number: card_number }).map_relation_to_array(:id_user).uniq.count %> users
           <% else end %>
         </td>
 
