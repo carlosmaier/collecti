@@ -44,9 +44,18 @@
         </td>
 
         <td>
-          <a href="/link_collection/<%= an_album.id %>">
-            Add album
-          </a>
+          
+          <% if @list_of_collections.include?(an_album.id) %>
+            
+            <a href="/albums/<%= an_album.id %>">
+              Go to your album
+            </a>
+
+            <% else %>
+            <a href="/link_collection/<%= an_album.id %>">
+              Add album
+            </a>
+            <% end %>
         </td>
       </tr>
       <% end %>

@@ -8,6 +8,10 @@ class AlbumsController < ApplicationController
     matching_albums = Album.all
 
     @list_of_albums = matching_albums.order({ :created_at => :asc })
+    
+    matching_collections = Collection.all.where({:id_user => session.fetch(:user_id)})
+    @list_of_collections = matching_collections.map_relation_to_array(:id_album)
+    p "User collects #{@list_of_collections}"
 
     render({ :template => "albums/index.html.erb" })
   end
