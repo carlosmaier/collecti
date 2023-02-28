@@ -23,6 +23,12 @@ class AlbumsController < ApplicationController
 
     @the_album = matching_albums.at(0)
 
+    @list_of_collections = Collection.all.where({:id_album => the_id }).where.not({:card_number => 0 })
+    matching_cards = @list_of_collections.where({:id_user => session.fetch(:user_id)})
+    @list_of_cards = matching_cards.map_relation_to_array(:card_number)
+
+    @list_of_collectors = @list_of_collections.map_relation_to_array(:id_user)
+
     render({ :template => "albums/show.html.erb" })
   end
 
