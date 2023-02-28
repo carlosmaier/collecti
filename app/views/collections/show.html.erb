@@ -1,0 +1,101 @@
+<div>
+  <div>
+    <h1>
+      Collection #<%= @the_collection.id %> details
+    </h1>
+
+    <div>
+      <div>
+        <a href="/collections">
+          Go back
+        </a>
+      </div>
+
+      <div>
+        <a href="/delete_collection/<%= @the_collection.id %>">
+          Delete collection
+        </a>
+      </div>
+    </div>
+
+    <dl>
+      <dt>
+        Id user
+      </dt>
+      <dd>
+        <%= @the_collection.id_user %>
+      </dd>
+
+      <dt>
+        Id album
+      </dt>
+      <dd>
+        <%= @the_collection.id_album %>
+      </dd>
+
+      <dt>
+        Card number
+      </dt>
+      <dd>
+        <%= @the_collection.card_number %>
+      </dd>
+
+      <dt>
+        Created at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_collection.created_at) %> ago
+      </dd>
+
+      <dt>
+        Updated at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_collection.updated_at) %> ago
+      </dd>
+    </dl>
+  </div>
+</div>
+
+<hr>
+
+
+<div>
+  <div>
+    <h2>
+      Edit collection
+    </h2>
+
+    <form action="/modify_collection/<%= @the_collection.id %>"  method="post" >
+      <div>
+        <label for="id_user_box">
+          Id user
+        </label>
+
+        <input type="text" id="id_user_box" name="query_id_user" value="<%= @the_collection.id_user %>">
+      </div>
+
+      <div>
+        <label for="id_album_box">
+          Id album
+        </label>
+
+        <input type="text" id="id_album_box" name="query_id_album" value="<%= @the_collection.id_album %>">
+      </div>
+
+      <div>
+        <label for="card_number_box">
+          Card number
+        </label>
+
+        <input type="text" id="card_number_box" name="query_card_number" value="<%= @the_collection.card_number %>">
+      </div>
+
+      <button>
+        Update collection
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>

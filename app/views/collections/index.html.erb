@@ -1,0 +1,118 @@
+<div>
+  <div>
+    <h1>
+      List of all collections
+    </h1>
+  </div>
+</div>
+
+<hr>
+
+<div>
+  <div>
+    <h2>
+      Add a new collection
+    </h2>
+
+    <form action="/insert_collection" method="post">
+      <div>
+        <label for="id_user_box">
+          Id user
+        </label>
+
+        <input type="text" id="id_user_box" name="query_id_user">
+      </div>
+
+      <div>
+        <label for="id_album_box">
+          Id album
+        </label>
+
+        <input type="text" id="id_album_box" name="query_id_album">
+      </div>
+
+      <div>
+        <label for="card_number_box">
+          Card number
+        </label>
+
+        <input type="text" id="card_number_box" name="query_card_number">
+      </div>
+
+      <button>
+        Create collection
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>
+<div>
+  <div>
+    <table border="1">
+      <tr>
+        <th>
+          ID
+        </th>
+
+        <th>
+          Id user
+        </th>
+
+        <th>
+          Id album
+        </th>
+
+        <th>
+          Card number
+        </th>
+
+        <th>
+          Created at
+        </th>
+
+        <th>
+          Updated at
+        </th>
+
+        <th>
+        </th>
+      </tr>
+
+      <% @list_of_collections.each do |a_collection| %>
+      <tr>
+        <td>
+          <%= a_collection.id %>
+        </td>
+
+        <td>
+          <%= a_collection.id_user %>
+        </td>
+
+        <td>
+          <%= a_collection.id_album %>
+        </td>
+
+        <td>
+          <%= a_collection.card_number %>
+        </td>
+
+        <td>
+          <%= time_ago_in_words(a_collection.created_at) %> ago
+        </td>
+        <td>
+          <%= time_ago_in_words(a_collection.updated_at) %> ago
+        </td>
+
+        <td>
+          <a href="/collections/<%= a_collection.id %>">
+            Show details
+          </a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<hr>

@@ -1,5 +1,24 @@
 Rails.application.routes.draw do
 
+  # Routes for the Collection resource:
+
+  # CREATE
+  post("/insert_collection", { :controller => "collections", :action => "create" })
+          
+  # READ
+  get("/collections", { :controller => "collections", :action => "index" })
+  
+  get("/collections/:path_id", { :controller => "collections", :action => "show" })
+  
+  # UPDATE
+  
+  post("/modify_collection/:path_id", { :controller => "collections", :action => "update" })
+  
+  # DELETE
+  get("/delete_collection/:path_id", { :controller => "collections", :action => "destroy" })
+
+  #------------------------------
+
   # Routes for the Album resource:
 
   # CREATE
