@@ -93,8 +93,9 @@
         </td>
 
         <td>
-          <% if @list_of_collectors.uniq.count + 1 - @list_of_collections.where({ card_number: card_number }).map_relation_to_array(:id_user).uniq.count != 0 %>
-            <%= @list_of_collectors.uniq.count + 1 - @list_of_collections.where({ card_number: card_number }).map_relation_to_array(:id_user).uniq.count %> users
+          <% collectors_no_card = @list_of_collections.where.not({:id_user => session.fetch(:user_id)}).where({ card_number: card_number }).map_relation_to_array(:id_user).uniq.count %>
+          <% if @list_of_collectors.uniq.count - collectors_no_card != 0 %>
+            <%= @list_of_collectors.uniq.count - collectors_no_card %> users
           <% else end %>
         </td>
 
