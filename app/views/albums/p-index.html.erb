@@ -1,0 +1,49 @@
+<div>
+  <div>
+    <h1>
+      Your Albums
+    </h1>
+  </div>
+</div>
+
+<hr>
+
+<div>
+  <div>
+    <table border="1">
+      <tr>
+        <th>ID</th>
+        <th>Album</th>
+        <th>Go</th>
+      </tr>
+
+      <% @list_of_albums.each do |a_album| %>
+      <tr>
+        <td>
+          <%= a_album.id %>
+        </td>
+        <td>
+          <%= a_album.title %>
+        </td>
+        <td>
+          <a href="/albums/<%= a_album.id %>">Go!</a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+
+
+
+
+<hr>
+
+<div>
+  <div>
+    <h3>
+      <a href="/albums/all_albums">Add another album?</a> Selector and button instead?
+    </h3>
+  </div>
+</div>

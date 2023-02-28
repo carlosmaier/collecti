@@ -1,0 +1,102 @@
+<div>
+  <div>
+    <h1>
+      List of all albums
+    </h1>
+  </div>
+</div>
+
+<hr>
+
+<div>
+  <div>
+    <h2>
+      Add a new album
+    </h2>
+
+    <form action="/insert_album" method="post">
+      <div>
+        <label for="name_box">
+          Name
+        </label>
+
+        <input type="text" id="name_box" name="query_name">
+      </div>
+
+      <div>
+        <label for="cards_box">
+          Cards
+        </label>
+
+        <input type="text" id="cards_box" name="query_cards">
+      </div>
+
+      <button>
+        Create album
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>
+<div>
+  <div>
+    <table border="1">
+      <tr>
+        <th>
+          ID
+        </th>
+
+        <th>
+          Name
+        </th>
+
+        <th>
+          Cards
+        </th>
+
+        <th>
+          Created at
+        </th>
+
+        <th>
+          Updated at
+        </th>
+
+        <th>
+        </th>
+      </tr>
+
+      <% @list_of_albums.each do |an_album| %>
+      <tr>
+        <td>
+          <%= an_album.id %>
+        </td>
+
+        <td>
+          <%= an_album.name %>
+        </td>
+
+        <td>
+          <%= an_album.cards %>
+        </td>
+
+        <td>
+          <%= time_ago_in_words(an_album.created_at) %> ago
+        </td>
+        <td>
+          <%= time_ago_in_words(an_album.updated_at) %> ago
+        </td>
+
+        <td>
+          <a href="/albums/<%= an_album.id %>">
+            Show details
+          </a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<hr>
