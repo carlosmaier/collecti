@@ -40,7 +40,7 @@ class CollectionsController < ApplicationController
 
     if the_collection.valid?
       the_collection.save
-      redirect_to("/collections", { :notice => "Collection created successfully." })
+      redirect_to("/albums/#{the_collection.id_album}", { :notice => "Collection created successfully." })
     else
       redirect_to("/collections", { :alert => the_collection.errors.full_messages.to_sentence })
     end

@@ -37,7 +37,7 @@ Rails.application.routes.draw do
   get("/link_collection/:path_id", { :controller => "collections", :action => "link" })
   
   # CREATE
-  get("/insert_collection/:path_id", { :controller => "collections", :action => "create" })
+  post("/insert_collection", { :controller => "collections", :action => "create" })
 
   # READ
   get("/collections", { :controller => "collections", :action => "index" })
