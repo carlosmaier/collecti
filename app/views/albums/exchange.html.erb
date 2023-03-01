@@ -16,11 +16,15 @@
 
 <div>
   <div>
-    <h2></h2>
+    <h2>Users who have card repeated:</h2>
     <table border="1">
       <tr>
         <th>
-          User
+          ID
+        </th>
+      
+        <th>
+          Name
         </th>
 
         <th>
@@ -28,7 +32,11 @@
         </th>
 
         <th>
-          Card to give user
+          Card this user needs
+        </th>
+
+        <th>
+          How many you have
         </th>
 
         <th>
@@ -36,19 +44,27 @@
         </th>
       </tr>
 
-      <% @collectors_repeated.each do |a_collector| %>
+      <% @collectors.each do |a_collector| %>
       <tr>
-          <% user = User.where({id: a_collector}).first %>
         <td>
-          <%= user.first_name + " " + user.last_name %>
+          <%= a_collector %>
         </td>
 
+        <td>
+          <%= User.full_name(a_collector) %>
+        </td>
+
+          <% user = User.where({id: a_collector}).first %>
         <td>
           <%= user.zip_code %>
         </td>
 
         <td>
-          Model each card
+          <%= @cards_needed %>
+        </td>
+
+        <td>
+          Get quantity of card
         </td>
 
         <td>
@@ -61,4 +77,5 @@
       <% end %>
     </table>
   </div>
+  My repeated cards: <%= @hash_repeated_cards %>
 </div>

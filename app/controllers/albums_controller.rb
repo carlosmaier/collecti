@@ -33,19 +33,44 @@ class AlbumsController < ApplicationController
   end
   
   def exchange
-    
+    # how can i call a method i created within this method?
+
     album_id = params.fetch("album_id")
     @card_number = params.fetch("card_number")
     
     matching_albums = Album.where({ :id => album_id })
     @the_album = matching_albums.at(0)
     
-    list_of_others_collections = Collection.all.where({:id_album => album_id }).where({:card_number => @card_number}).where.not({ id_user: session[:user_id]})
+    # method 1: find other users with repeated card
+    user_id = session[:user_id]
+    @collectors = Collection.get_users_with_repeated_card(album_id,@card_number,user_id)
+    
+    
+    #method 2: create a hash -> find my repeated cards and quantity
+    my_cards = Collection.all.where({:id_album => album_id }).where({ id_user: session[:user_id]}).map_relation_to_array(:card_number)
+    my_repeated_cards = my_cards.find_all { |e| my_cards.count(e) > 1 }
+    my_repeated_cards_unique = my_repeated_cards.uniq.sort
+    @hash_repeated_cards = Hash.new
+    
+    my_repeated_cards_unique.each do |a_card|
+      @hash_repeated_cards[a_card] = my_repeated_cards.count(a_card)
+    end
+    
+    #method 3: find users who need my repeated cards
+    @collectors.each do |a_collector|
 
-    collectors = list_of_others_collections.map_relation_to_array(:id_user)
+      @cards_needed = Array.new
+      collector_cards = Collection.get_cards_from_album_and_user(album_id,a_collector)
+      
+      my_repeated_cards_unique.each do |a_card|
 
-    @collectors_repeated = collectors.find_all { |e| collectors.count(e) > 1 }.uniq
+        if collector_cards.count(a_card) == 0
+          @cards_needed.push(a_card)
+        else end
 
+      end
+    end
+    
     render({ :template => "albums/exchange.html.erb" })
   end
 

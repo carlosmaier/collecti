@@ -19,6 +19,11 @@
 
     <nav>
       <ul>
+          <li>
+            <a href="/">
+              Home
+            </a>
+          </li>
           <% if session[:user_id] == nil %>
             <li>
               <a href="/user_sign_in">
@@ -27,17 +32,13 @@
             </li>
           <% else %>
             <li>
+              User: <%= @current_user.first_name %> | 
               <a href="/user_sign_out">
                 Sign out
               </a>
             </li>
           <% end %>          
           
-        <li>
-          <a href="/">
-            Home
-          </a>
-        </li>
       </ul>
     </nav>
 
