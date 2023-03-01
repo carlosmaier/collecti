@@ -31,6 +31,24 @@ class AlbumsController < ApplicationController
 
     render({ :template => "albums/show.html.erb" })
   end
+  
+  def exchange
+    
+    album_id = params.fetch("album_id")
+    @card_number = params.fetch("card_number")
+    
+    matching_albums = Album.where({ :id => album_id })
+    @the_album = matching_albums.at(0)
+    
+    list_of_others_collections = Collection.all.where({:id_album => album_id }).where({:card_number => @card_number}).where.not({ id_user: session[:user_id]})
+
+    collectors = list_of_others_collections.map_relation_to_array(:id_user)
+
+    @collectors_repeated = collectors.find_all { |e| collectors.count(e) > 1 }.uniq
+
+    render({ :template => "albums/exchange.html.erb" })
+  end
+
 
   def create
     the_album = Album.new

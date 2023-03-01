@@ -3,21 +3,13 @@
     <h1>
       <%= @the_album.name %>
     </h1>
-
-    <div>
-      <div>
-        <a href="/albums">
-          Go back
-        </a>
-      </div>
-    </div>
   </div>
 </div>
 
 <hr>
   
   <div>
-    <h4>Cards to complete album: <%= @the_album.cards - @list_of_cards.uniq.count %> | Completion: <%= 100*@list_of_cards.uniq.count/@the_album.cards  %>%</h4>
+    <h4>Cards to complete album: <%= @the_album.cards - @list_of_cards.uniq.count %> | Album completion: <%= 100*@list_of_cards.uniq.count/@the_album.cards  %>%</h4>
     <form action="/insert_collection" method="post">
       <div>
         <label for="id_user_box"></label>
@@ -64,6 +56,10 @@
         <th>
           Users looking for this card:
         </th>
+
+        <th>
+          
+        </th>
       </tr>
 
       <% @the_album.cards.times do |a_card| %>
@@ -95,8 +91,20 @@
         <td>
           <% collectors_no_card = @list_of_collections.where.not({:id_user => session.fetch(:user_id)}).where({ card_number: card_number }).map_relation_to_array(:id_user).uniq.count %>
           <% if @list_of_collectors.uniq.count - collectors_no_card != 0 %>
-            <%= @list_of_collectors.uniq.count - collectors_no_card %> users
+             <%= @list_of_collectors.uniq.count - collectors_no_card %> users
           <% else end %>
+        </td>
+
+        <td>
+          <% if number_of_collectors_repeated == 1 %>
+              <form action="/albums/<%= @the_album.id %>/<%= card_number %>" method="get">
+                <button>See user</button>
+              </form>
+          <% elsif number_of_collectors_repeated != 0 %>
+              <form action="/albums/<%= @the_album.id %>/<%= card_number %>" method="get">
+                <button>See users</button>
+              </form>
+          <% else end %>              
         </td>
 
       </tr>

@@ -1,0 +1,62 @@
+<div>
+  <a href="/albums/<%= @the_album.id %>">
+    Go back to album
+  </a>
+</div>
+
+<div>
+  <div>
+    <h1>
+      <%= @the_album.name %> | Card: <%= @card_number %>
+    </h1>
+  </div>
+</div>
+
+<hr>
+
+<div>
+  <div>
+    <h2></h2>
+    <table border="1">
+      <tr>
+        <th>
+          User
+        </th>
+
+        <th>
+          Zip Code
+        </th>
+
+        <th>
+          Card to give user
+        </th>
+
+        <th>
+          
+        </th>
+      </tr>
+
+      <% @collectors_repeated.each do |a_collector| %>
+      <tr>
+          <% user = User.where({id: a_collector}).first %>
+        <td>
+          <%= user.first_name + " " + user.last_name %>
+        </td>
+
+        <td>
+          <%= user.zip_code %>
+        </td>
+
+        <td>
+          Model each card
+        </td>
+
+        <td>
+          Exchange
+        </td>
+
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>

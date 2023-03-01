@@ -62,14 +62,19 @@ Rails.application.routes.draw do
   get("/albums", { :controller => "albums", :action => "index" })
 
   get("/albums/:path_id", { :controller => "albums", :action => "show" })
-
+  
   # UPDATE
-
+  
   post("/modify_album/:path_id", { :controller => "albums", :action => "update" })
-
+  
   # DELETE
   get("/delete_album/:path_id", { :controller => "albums", :action => "destroy" })
-
+  
   #------------------------------
+  
+  # Other Routes
+  
+  # EXCHANGE CARDS
+  get("/albums/:album_id/:card_number", { :controller => "albums", :action => "exchange" })
 
 end
