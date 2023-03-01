@@ -44,36 +44,41 @@
         </th>
       </tr>
 
-      <% @collectors.each do |a_collector| %>
-      <tr>
-        <td>
-          <%= a_collector %>
-        </td>
+      <% @exchange_hash.keys.each do |a_collector| %>
+        
+        <% user = User.where({id: a_collector}).first %>
+      
+        <% @exchange_hash.fetch(a_collector).keys.each do |a_card| %>
+          <tr>
+            <td>
+              <%= a_collector %>
+            </td>
 
-        <td>
-          <%= User.full_name(a_collector) %>
-        </td>
+            <td>
+              <%= User.full_name(a_collector) %>            
+            </td>
 
-          <% user = User.where({id: a_collector}).first %>
-        <td>
-          <%= user.zip_code %>
-        </td>
+            <td>
+              <%= user.zip_code %>
+            </td>
 
-        <td>
-          <%= @cards_needed %>
-        </td>
+            <td>
+              <%= a_card %>
+            </td>
 
-        <td>
-          Get quantity of card
-        </td>
+            <td>
+              <%= @exchange_hash.fetch(a_collector).fetch(a_card) %>
+            </td>
 
-        <td>
-          <form action="/exchange_request" method="post">
+            <td>
+              <form action="/exchange_request" method="post">
                 <button>Send exchange request</button>
               </form>
-        </td>
+            </td>
+          </tr>
 
-      </tr>
+        <% end %>
+
       <% end %>
     </table>
   </div>

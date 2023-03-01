@@ -43,13 +43,13 @@ class AlbumsController < ApplicationController
     
     # method 1: find other users with repeated card
     user_id = session[:user_id]
-    @collectors = Collection.get_users_with_repeated_card(album_id,@card_number,user_id)
+    collectors = Collection.get_users_with_repeated_card(album_id,@card_number,user_id)
     
     #method 2: create a hash -> find my repeated cards and quantity
-    @repeated_cards_hash = Collection.get_my_repeated_cards(album_id,user_id)
+    repeated_cards_hash = Collection.get_my_repeated_cards(album_id,user_id)
 
     #method 3: find users who need my repeated cards
-    @exchange_hash = Collection.match_users_who_need_my_repeated_cards(album_id,@collectors,@repeated_cards_hash)
+    @exchange_hash = Collection.match_users_who_need_my_repeated_cards(album_id,collectors,repeated_cards_hash)
     
 
     render({ :template => "albums/exchange.html.erb" })
