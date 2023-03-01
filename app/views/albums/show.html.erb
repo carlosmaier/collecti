@@ -9,11 +9,11 @@
 <hr>
   
   <div>
-    <h4>Cards to complete album: <%= @the_album.cards - @list_of_cards.uniq.count %> | Album completion: <%= 100*@list_of_cards.uniq.count/@the_album.cards  %>%</h4>
+    <h4>Cards to complete album: <%= @the_album.cards - @list_of_cards.uniq.count %> | Album completion: <%= 100*@list_of_cards.uniq.count/@the_album.cards %> | Number of album collectors: <%= @list_of_collectors.count + 1 %></h4>
     <form action="/insert_collection" method="post">
       <div>
         <label for="id_user_box"></label>
-        <input type="hidden" value="<%= session[:user_id] %>" id="user_id_box" name="query_id_user">
+        <input type="hidden" value="<%= session[:user_id] %>" id="id_user_box" name="query_id_user">
       </div>
 
       <div>
@@ -114,44 +114,45 @@
     </table>
   </div>
 </div>
-
-
 <hr>
 
-<div>
+<% if @current_user.id == 1 %>
+
   <div>
-    <h2>
-      Edit album (ADMIN)
-    </h2>
+    <div>
+      <h2>
+        Edit album (ADMIN)
+      </h2>
 
-    <form action="/modify_album/<%= @the_album.id %>"  method="post" >
-      <div>
-        <label for="name_box">
-          Name
-        </label>
+      <form action="/modify_album/<%= @the_album.id %>"  method="post" >
+        <div>
+          <label for="name_box">
+            Name
+          </label>
 
-        <input type="text" id="name_box" name="query_name" value="<%= @the_album.name %>">
-      </div>
+          <input type="text" id="name_box" name="query_name" value="<%= @the_album.name %>">
+        </div>
 
-      <div>
-        <label for="cards_box">
-          Cards
-        </label>
+        <div>
+          <label for="cards_box">
+            Cards
+          </label>
 
-        <input type="text" id="cards_box" name="query_cards" value="<%= @the_album.cards %>">
-      </div>
+          <input type="text" id="cards_box" name="query_cards" value="<%= @the_album.cards %>">
+        </div>
 
-      <button>
-        Update album
-      </button>
-      
-      <div>
-        <a href="/delete_album/<%= @the_album.id %>">
-          Delete album
-        </a>
-      </div>
-    </form>
+        <button>
+          Update album
+        </button>
+        
+        <div>
+        
+          <a href="/delete_album/<%= @the_album.id %>">
+            Delete album
+          </a>
+        </div>
+      </form>
+    </div>
   </div>
-</div>
-
-<hr>
+  <hr>
+<% else end %>

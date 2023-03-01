@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_03_01_011940) do
+ActiveRecord::Schema.define(version: 2023_03_01_050030) do
 
   create_table "albums", force: :cascade do |t|
     t.string "name"
@@ -26,6 +26,17 @@ ActiveRecord::Schema.define(version: 2023_03_01_011940) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "exchange_request"
+  end
+
+  create_table "exchanges", force: :cascade do |t|
+    t.string "status"
+    t.integer "album_id"
+    t.integer "id_sender"
+    t.integer "card_number_to_send"
+    t.integer "id_receiver"
+    t.integer "card_number_to_receive"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "users", force: :cascade do |t|

@@ -65,9 +65,42 @@
             </td>
 
             <td>
-              <form action="/exchange_request" method="post">
-                <button>Send exchange request</button>
-              </form>
+
+              <% check = Exchange.check_request(@the_album.id, session[:user_id], a_card, user.id, @card_number) %>
+              <% if check == false %>
+                <form action="/insert_exchange" method="post">
+                  <div>
+                    <label for="id_album_box"></label>
+                    <input type="hidden" value="<%= @the_album.id %>" id="id_album_box" name="query_album_id">
+                  </div>
+
+                  <div>
+                    <label for="id_sender_box"></label>
+                    <input type="hidden" value="<%= session[:user_id] %>" id="id_sender_box" name="query_id_sender">
+                  </div>
+
+                  <div>
+                    <label for="id_card_sender_box"></label>
+                    <input type="hidden" value="<%= a_card %>" id="id_card_sender_box" name="query_card_number_to_send">
+                  </div>
+
+                  <div>
+                    <label for="id_receiver_box"></label>
+                    <input type="hidden" value="<%= user.id %>" id="id_receiver_box" name="query_id_receiver">
+                  </div>
+
+                  <div>
+                    <label for="id_card_receiver_box"></label>
+                    <input type="hidden" value="<%= @card_number %>" id="id_card_receiver_box" name="query_card_number_to_receive">
+                  </div>
+
+                  <button>Send exchange request</button>
+                </form>
+              <% else %>
+                  <form action="/exchanges">
+                    <button >Check request status</button>
+                  </form> 
+              <% end %>
             </td>
           </tr>
 

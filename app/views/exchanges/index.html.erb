@@ -1,0 +1,166 @@
+<div>
+  <div>
+    <h1>
+      List of all exchanges
+    </h1>
+  </div>
+</div>
+
+<hr>
+
+<div>
+  <div>
+    <h2>
+      Add a new exchange
+    </h2>
+
+    <form action="/insert_exchange" method="post">
+      <div>
+        <label for="status_box">
+          Status
+        </label>
+
+        <input type="text" id="status_box" name="query_status">
+      </div>
+
+      <div>
+        <label for="album_id_box">
+          Album
+        </label>
+
+        <input type="text" id="album_id_box" name="query_album_id">
+      </div>
+
+      <div>
+        <label for="id_sender_box">
+          Id sender
+        </label>
+
+        <input type="text" id="id_sender_box" name="query_id_sender">
+      </div>
+
+      <div>
+        <label for="card_number_to_send_box">
+          Card number to send
+        </label>
+
+        <input type="text" id="card_number_to_send_box" name="query_card_number_to_send">
+      </div>
+
+      <div>
+        <label for="id_receiver_box">
+          Id receiver
+        </label>
+
+        <input type="text" id="id_receiver_box" name="query_id_receiver">
+      </div>
+
+      <div>
+        <label for="card_number_to_receive_box">
+          Card number to receive
+        </label>
+
+        <input type="text" id="card_number_to_receive_box" name="query_card_number_to_receive">
+      </div>
+
+      <button>
+        Create exchange
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>
+<div>
+  <div>
+    <table border="1">
+      <tr>
+        <th>
+          ID
+        </th>
+
+        <th>
+          Status
+        </th>
+
+        <th>
+          Album
+        </th>
+
+        <th>
+          Id sender
+        </th>
+
+        <th>
+          Card number to send
+        </th>
+
+        <th>
+          Id receiver
+        </th>
+
+        <th>
+          Card number to receive
+        </th>
+
+        <th>
+          Created at
+        </th>
+
+        <th>
+          Updated at
+        </th>
+
+        <th>
+        </th>
+      </tr>
+
+      <% @list_of_exchanges.each do |an_exchange| %>
+      <tr>
+        <td>
+          <%= an_exchange.id %>
+        </td>
+
+        <td>
+          <%= an_exchange.status %>
+        </td>
+
+        <td>
+          <%= an_exchange.album_id %>
+        </td>
+
+        <td>
+          <%= an_exchange.id_sender %>
+        </td>
+
+        <td>
+          <%= an_exchange.card_number_to_send %>
+        </td>
+
+        <td>
+          <%= an_exchange.id_receiver %>
+        </td>
+
+        <td>
+          <%= an_exchange.card_number_to_receive %>
+        </td>
+
+        <td>
+          <%= time_ago_in_words(an_exchange.created_at) %> ago
+        </td>
+        <td>
+          <%= time_ago_in_words(an_exchange.updated_at) %> ago
+        </td>
+
+        <td>
+          <a href="/exchanges/<%= an_exchange.id %>">
+            Show details
+          </a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<hr>

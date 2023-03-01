@@ -33,8 +33,7 @@ class AlbumsController < ApplicationController
   end
   
   def exchange
-    # how can i call a method i created within this method?
-
+    
     album_id = params.fetch("album_id")
     @card_number = params.fetch("card_number")
     
@@ -51,7 +50,6 @@ class AlbumsController < ApplicationController
     #method 3: find users who need my repeated cards
     @exchange_hash = Collection.match_users_who_need_my_repeated_cards(album_id,collectors,repeated_cards_hash)
     
-
     render({ :template => "albums/exchange.html.erb" })
   end
 

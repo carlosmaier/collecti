@@ -1,5 +1,24 @@
 Rails.application.routes.draw do
 
+  # Routes for the Exchange resource:
+
+  # CREATE
+  post("/insert_exchange", { :controller => "exchanges", :action => "create" })
+          
+  # READ
+  get("/exchanges", { :controller => "exchanges", :action => "index" })
+  
+  get("/exchanges/:path_id", { :controller => "exchanges", :action => "show" })
+  
+  # UPDATE
+  
+  post("/modify_exchange/:path_id", { :controller => "exchanges", :action => "update" })
+  
+  # DELETE
+  get("/delete_exchange/:path_id", { :controller => "exchanges", :action => "destroy" })
+
+  #------------------------------
+
   # Home
 
   get("/", { :controller => "albums", :action => "index" })
@@ -76,5 +95,6 @@ Rails.application.routes.draw do
   
   # EXCHANGE CARDS
   get("/albums/:album_id/:card_number", { :controller => "albums", :action => "exchange" })
+  
 
 end
