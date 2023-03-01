@@ -1,83 +1,20 @@
 <div>
   <div>
     <h1>
-      List of all exchanges
+      Exchange requests
     </h1>
   </div>
 </div>
 
 <hr>
 
+
+
 <div>
   <div>
-    <h2>
-      Add a new exchange
-    </h2>
-
-    <form action="/insert_exchange" method="post">
-      <div>
-        <label for="status_box">
-          Status
-        </label>
-
-        <input type="text" id="status_box" name="query_status">
-      </div>
-
-      <div>
-        <label for="album_id_box">
-          Album
-        </label>
-
-        <input type="text" id="album_id_box" name="query_album_id">
-      </div>
-
-      <div>
-        <label for="id_sender_box">
-          Id sender
-        </label>
-
-        <input type="text" id="id_sender_box" name="query_id_sender">
-      </div>
-
-      <div>
-        <label for="card_number_to_send_box">
-          Card number to send
-        </label>
-
-        <input type="text" id="card_number_to_send_box" name="query_card_number_to_send">
-      </div>
-
-      <div>
-        <label for="id_receiver_box">
-          Id receiver
-        </label>
-
-        <input type="text" id="id_receiver_box" name="query_id_receiver">
-      </div>
-
-      <div>
-        <label for="card_number_to_receive_box">
-          Card number to receive
-        </label>
-
-        <input type="text" id="card_number_to_receive_box" name="query_card_number_to_receive">
-      </div>
-
-      <button>
-        Create exchange
-      </button>
-    </form>
-  </div>
-</div>
-
-<hr>
-<div>
-  <div>
+    <h2>Received requests</h2>
     <table border="1">
       <tr>
-        <th>
-          ID
-        </th>
 
         <th>
           Status
@@ -88,49 +25,38 @@
         </th>
 
         <th>
-          Id sender
+          You get
         </th>
 
         <th>
-          Card number to send
+          From
         </th>
 
         <th>
-          Id receiver
+          You give
         </th>
 
         <th>
-          Card number to receive
+          Inventory
         </th>
 
         <th>
-          Created at
-        </th>
-
-        <th>
-          Updated at
+          Request received
         </th>
 
         <th>
         </th>
       </tr>
 
-      <% @list_of_exchanges.each do |an_exchange| %>
+      <% @list_of_exchanges_received.each do |an_exchange| %>
       <tr>
+        
         <td>
-          <%= an_exchange.id %>
+          <%= an_exchange.status.capitalize %>
         </td>
 
         <td>
-          <%= an_exchange.status %>
-        </td>
-
-        <td>
-          <%= an_exchange.album_id %>
-        </td>
-
-        <td>
-          <%= an_exchange.id_sender %>
+          <%= Album.where({ id: an_exchange.album_id}).first.name %>
         </td>
 
         <td>
@@ -138,7 +64,7 @@
         </td>
 
         <td>
-          <%= an_exchange.id_receiver %>
+          <%= User.full_name(an_exchange.id_sender) %>
         </td>
 
         <td>
@@ -146,21 +72,59 @@
         </td>
 
         <td>
-          <%= time_ago_in_words(an_exchange.created_at) %> ago
-        </td>
-        <td>
-          <%= time_ago_in_words(an_exchange.updated_at) %> ago
+          <% inventory = Collection.check_card_inventory(an_exchange.album_id,session[:user_id],an_exchange.card_number_to_receive) %>
+          <%= inventory %> cards
         </td>
 
         <td>
-          <a href="/exchanges/<%= an_exchange.id %>">
-            Show details
-          </a>
+          <%= time_ago_in_words(an_exchange.created_at) %> ago
+        </td>
+
+        <td>
+          <form action="/close_exchange" method="post">
+            <div>
+              <label for="id_exchange_box"></label>
+              <input type="hidden" value="<%= an_exchange.id %>" id="id_exchange_box" name="query_exchange_id">
+            </div>
+            <div>
+              <label for="status_exchange_box"></label>
+              <input type="hidden" value="<%= "accepted" %>" id="status_exchange_box" name="query_exchange_status">
+            </div>
+            <button >Accept</button>
+          </form>
+
+          <form action="/close_exchange" method="post">
+            <div>
+              <label for="id_exchange_box"></label>
+              <input type="hidden" value="<%= an_exchange.id %>" id="id_exchange_box" name="query_exchange_id">
+            </div>
+            <div>
+              <label for="status_exchange_box"></label>
+              <input type="hidden" value="<%= "declined" %>" id="status_exchange_box" name="query_exchange_status">
+            </div>
+            <button >Decline</button>
+          </form>
         </td>
       </tr>
       <% end %>
     </table>
   </div>
+</div>
+
+<hr>
+
+<div>
+  <div>
+    <h2>Sent requests</h2>
+  </div>  
+</div>
+
+<hr>
+
+<div>
+  <div>
+    <h2>Past requests</h2>
+  </div>  
 </div>
 
 <hr>

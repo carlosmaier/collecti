@@ -93,8 +93,10 @@ Rails.application.routes.draw do
   
   # Other Routes
   
-  # EXCHANGE CARDS
+  # REVIEW POSSIBLE EXCHANGES
   get("/albums/:album_id/:card_number", { :controller => "albums", :action => "exchange" })
   
+  # ACCEPT EXCHANGE
+  post("/close_exchange", { :controller => "exchanges", :action => "close" })
 
 end

@@ -19,11 +19,6 @@
 
     <nav>
       <ul>
-          <li>
-            <a href="/">
-              Home
-            </a>
-          </li>
           <% if session[:user_id] == nil %>
             <li>
               <a href="/user_sign_in">
@@ -38,7 +33,16 @@
               </a>
             </li>
           <% end %>          
-          
+          <li>
+            <a href="/">
+              Home
+            </a>
+          </li>
+          <li>
+            <a href="/exchanges">
+                Your exchanges
+              </a>
+          </li>
       </ul>
     </nav>
 

@@ -64,4 +64,9 @@ class Collection < ApplicationRecord
     return hash_users_who_need_my_cards
   end
 
+  def Collection.check_card_inventory(album_id,user_id,card_id)
+    inventory = Collection.get_my_repeated_cards(album_id,user_id).fetch(card_id)
+    return inventory
+  end
+
 end
