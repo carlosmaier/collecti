@@ -29,5 +29,40 @@ class Collection < ApplicationRecord
     return collectors_repeated
   end
 
+  def Collection.get_my_repeated_cards(album_id,user_id)
+
+    my_cards = Collection.all.where({:id_album => album_id }).where({ id_user: user_id}).map_relation_to_array(:card_number)
+    my_repeated_cards = my_cards.find_all { |e| my_cards.count(e) > 1 }
+    my_repeated_cards_unique = my_repeated_cards.uniq.sort
+    
+    hash_repeated_cards = Hash.new
+    
+    my_repeated_cards_unique.each do |a_card|
+      hash_repeated_cards[a_card] = my_repeated_cards.count(a_card)
+    end
+    return hash_repeated_cards
+  end
+
+  def Collection.match_users_who_need_my_repeated_cards(album_id,users_id_array,repeated_cards_hash)
+
+    hash_users_who_need_my_cards = Hash.new
+
+    users_id_array.each do |a_collector|
+
+      cards_needed = Array.new
+      collector_cards = Collection.get_cards_from_album_and_user(album_id,a_collector)
+      
+      repeated_cards_hash.keys.each do |a_card|
+        if collector_cards.count(a_card) == 0
+          cards_needed.push(a_card)
+        else end
+      end
+
+      hash_users_who_need_my_cards[a_collector] = cards_needed
+    end
+
+    puts hash_users_who_need_my_cards
+    return hash_users_who_need_my_cards
+  end
 
 end

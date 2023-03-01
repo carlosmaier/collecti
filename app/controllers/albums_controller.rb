@@ -45,32 +45,13 @@ class AlbumsController < ApplicationController
     user_id = session[:user_id]
     @collectors = Collection.get_users_with_repeated_card(album_id,@card_number,user_id)
     
-    
     #method 2: create a hash -> find my repeated cards and quantity
-    my_cards = Collection.all.where({:id_album => album_id }).where({ id_user: session[:user_id]}).map_relation_to_array(:card_number)
-    my_repeated_cards = my_cards.find_all { |e| my_cards.count(e) > 1 }
-    my_repeated_cards_unique = my_repeated_cards.uniq.sort
-    @hash_repeated_cards = Hash.new
-    
-    my_repeated_cards_unique.each do |a_card|
-      @hash_repeated_cards[a_card] = my_repeated_cards.count(a_card)
-    end
-    
+    @repeated_cards_hash = Collection.get_my_repeated_cards(album_id,user_id)
+
     #method 3: find users who need my repeated cards
-    @collectors.each do |a_collector|
-
-      @cards_needed = Array.new
-      collector_cards = Collection.get_cards_from_album_and_user(album_id,a_collector)
-      
-      my_repeated_cards_unique.each do |a_card|
-
-        if collector_cards.count(a_card) == 0
-          @cards_needed.push(a_card)
-        else end
-
-      end
-    end
+    @exchange_hash = Collection.match_users_who_need_my_repeated_cards(album_id,@collectors,@repeated_cards_hash)
     
+
     render({ :template => "albums/exchange.html.erb" })
   end
 
