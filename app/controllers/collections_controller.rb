@@ -63,11 +63,14 @@ class CollectionsController < ApplicationController
   end
 
   def destroy
-    the_id = params.fetch("path_id")
-    the_collection = Collection.where({ :id => the_id }).at(0)
 
+    id_user = params.fetch("query_id_user")
+    id_album = params.fetch("query_id_album")
+    card_number = params.fetch("query_card_number")
+
+    the_collection = Collection.where({:id_user => id_user}).where({:id_album => id_album }).where({ :card_number => card_number}).first
     the_collection.destroy
 
-    redirect_to("/collections", { :notice => "Collection deleted successfully."} )
+    redirect_to("/albums/#{id_album}", { :notice => "Collection deleted successfully."} )
   end
 end

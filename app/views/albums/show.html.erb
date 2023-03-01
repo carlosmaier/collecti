@@ -29,9 +29,29 @@
         <button>
           Add card
         </button>
-  Subtract cards form and button
-      </div>
     </form>
+
+    <form action="/delete_collection" method="post">
+      <div>
+        <label for="id_user_box"></label>
+        <input type="hidden" value="<%= session[:user_id] %>" id="id_user_box" name="query_id_user">
+      </div>
+
+      <div>
+        <label for="id_album_box"></label>
+        <input type="hidden" value="<%= @the_album.id %>" id="id_album_box" name="query_id_album">
+      </div>
+
+      <div>
+        <label for="card_number_box">
+    
+        </label>
+        <input type="number" id="card_number_box" name="query_card_number" min="1" max=<%= @the_album.cards %> placeholder="Card #">
+        <button>
+          Delete card
+        </button>
+    </form>
+      </div>
   </div>
 
 <hr>

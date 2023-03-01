@@ -68,7 +68,7 @@ Rails.application.routes.draw do
   post("/modify_collection/:path_id", { :controller => "collections", :action => "update" })
 
   # DELETE
-  get("/delete_collection/:path_id", { :controller => "collections", :action => "destroy" })
+  post("/delete_collection", { :controller => "collections", :action => "destroy" })
 
   #------------------------------
 
