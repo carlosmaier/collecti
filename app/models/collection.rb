@@ -46,22 +46,21 @@ class Collection < ApplicationRecord
   def Collection.match_users_who_need_my_repeated_cards(album_id,users_id_array,repeated_cards_hash)
 
     hash_users_who_need_my_cards = Hash.new
-
+    
     users_id_array.each do |a_collector|
-
-      cards_needed = Array.new
-      collector_cards = Collection.get_cards_from_album_and_user(album_id,a_collector)
       
+      collector_cards = Collection.get_cards_from_album_and_user(album_id,a_collector)
+      cards_needed = Hash.new
+
       repeated_cards_hash.keys.each do |a_card|
         if collector_cards.count(a_card) == 0
-          cards_needed.push(a_card)
+          cards_needed[a_card] = repeated_cards_hash.fetch(a_card)
         else end
       end
-
+      
       hash_users_who_need_my_cards[a_collector] = cards_needed
     end
-
-    puts hash_users_who_need_my_cards
+    
     return hash_users_who_need_my_cards
   end
 
