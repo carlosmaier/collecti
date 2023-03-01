@@ -9,7 +9,7 @@
 <hr>
   
   <div>
-    <h4>Cards to complete album: <%= @the_album.cards - @list_of_cards.uniq.count %> | Album completion: <%= 100*@list_of_cards.uniq.count/@the_album.cards %> | Number of album collectors: <%= @list_of_collectors.count + 1 %></h4>
+    <h4>Cards missing to complete album: <%= @the_album.cards - @list_of_cards.uniq.count %> | Album completion: <%= 100*@list_of_cards.uniq.count/@the_album.cards %>% | People collecting album: <%= @list_of_collectors.count + 1 %></h4>
     <form action="/insert_collection" method="post">
       <div>
         <label for="id_user_box"></label>

@@ -80,17 +80,26 @@ class ExchangesController < ApplicationController
         sender_collection.id_album = the_exchange.album_id
         sender_collection.card_number = the_exchange.card_number_to_receive
         sender_collection.exchange_request = true
-        
+
+        sender_card_to_give = Collection.where({:id_user => the_exchange.id_sender}).where({:id_album => the_exchange.album_id }).where({ :card_number => the_exchange.card_number_to_send}).first
+                
         receiver_collection = Collection.new
         receiver_collection.id_user = the_exchange.id_receiver
         receiver_collection.id_album = the_exchange.album_id
         receiver_collection.card_number = the_exchange.card_number_to_send
         receiver_collection.exchange_request = true
+
+        receiver_card_to_give = Collection.where({:id_user => the_exchange.id_receiver}).where({:id_album => the_exchange.album_id }).where({ :card_number => the_exchange.card_number_to_receive}).first
+        
         
         if sender_collection.valid? && receiver_collection.valid?
           the_exchange.save
           sender_collection.save
           receiver_collection.save
+          sender_card_to_give.destroy
+          receiver_card_to_give.destroy
+
+          
           redirect_to("/exchanges", { :notice => "Exchanged successfully."} )
         else
           redirect_to("/exchanges", { :alert => sender_collection.errors.full_messages.to_sentence })
