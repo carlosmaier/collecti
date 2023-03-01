@@ -197,7 +197,6 @@
           </form>
         </td>
       <% end %>
-
     </table>
   </div>  
 </div>
@@ -207,6 +206,73 @@
 <div>
   <div>
     <h2>Past requests</h2>
+    <table border="1">
+      <tr>
+
+        <th>
+          Status
+        </th>
+
+        <th>
+          Album
+        </th>
+
+        <th>
+          Sender
+        </th>
+
+        <th>
+          Sender gives
+        </th>
+
+        <th>
+          Receiver
+        </th>
+
+        <th>
+          Receiver gives
+        </th>
+
+        <th>
+          Last modified
+        </th>
+
+        
+      </tr>
+
+      <% @list_of_exchanges_past.each do |an_exchange| %>
+      <tr>
+        
+        <td>
+          <%= an_exchange.status.capitalize %>
+        </td>
+
+        <td>
+          <%= Album.where({ id: an_exchange.album_id}).first.name %>
+        </td>
+
+        <td>
+          <%= User.full_name(an_exchange.id_sender) %>
+        </td>
+
+        <td>
+          <%= an_exchange.card_number_to_send %>
+        </td>
+
+        <td>
+          <%= User.full_name(an_exchange.id_receiver) %>
+        </td>
+
+        <td>
+          <%= an_exchange.card_number_to_receive %>
+        </td>
+
+        <td>
+          <%= time_ago_in_words(an_exchange.updated_at) %> ago
+        </td>
+
+      <% end %>
+    </table>
   </div>  
 </div>
 
