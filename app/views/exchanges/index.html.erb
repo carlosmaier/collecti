@@ -1,7 +1,7 @@
 <div>
   <div>
     <h1>
-      Exchange requests
+      Your exchanges
     </h1>
   </div>
 </div>
@@ -116,6 +116,89 @@
 <div>
   <div>
     <h2>Sent requests</h2>
+    <table border="1">
+      <tr>
+
+        <th>
+          Status
+        </th>
+
+        <th>
+          Album
+        </th>
+
+        <th>
+          You get
+        </th>
+
+        <th>
+          From
+        </th>
+
+        <th>
+          You give
+        </th>
+
+        <th>
+          Inventory
+        </th>
+
+        <th>
+          Request sent
+        </th>
+
+        <th>
+        </th>
+      </tr>
+
+      <% @list_of_exchanges_sent.each do |an_exchange| %>
+      <tr>
+        
+        <td>
+          <%= an_exchange.status.capitalize %>
+        </td>
+
+        <td>
+          <%= Album.where({ id: an_exchange.album_id}).first.name %>
+        </td>
+
+        <td>
+          <%= an_exchange.card_number_to_receive %>
+        </td>
+
+        <td>
+          <%= User.full_name(an_exchange.id_receiver) %>
+        </td>
+
+        <td>
+          <%= an_exchange.card_number_to_send %>
+        </td>
+
+        <td>
+          <% inventory = Collection.check_card_inventory(an_exchange.album_id,session[:user_id],an_exchange.card_number_to_send) %>
+          <%= inventory %> cards
+        </td>
+
+        <td>
+          <%= time_ago_in_words(an_exchange.created_at) %> ago
+        </td>
+
+        <td>
+          <form action="/cancel_exchange" method="post">
+            <div>
+              <label for="id_exchange_box"></label>
+              <input type="hidden" value="<%= an_exchange.id %>" id="id_exchange_box" name="query_exchange_id">
+            </div>
+            <div>
+              <label for="status_exchange_box"></label>
+              <input type="hidden" value="<%= "cancelled" %>" id="status_exchange_box" name="query_exchange_status">
+            </div>
+            <button >Cancel request</button>
+          </form>
+        </td>
+      <% end %>
+
+    </table>
   </div>  
 </div>
 

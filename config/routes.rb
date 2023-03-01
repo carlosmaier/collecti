@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   post("/modify_exchange/:path_id", { :controller => "exchanges", :action => "update" })
   
   # DELETE
-  get("/delete_exchange/:path_id", { :controller => "exchanges", :action => "destroy" })
+  post("/delete_exchange", { :controller => "exchanges", :action => "destroy" })
 
   #------------------------------
 
@@ -99,4 +99,6 @@ Rails.application.routes.draw do
   # ACCEPT EXCHANGE
   post("/close_exchange", { :controller => "exchanges", :action => "close" })
 
+  # CANCEL EXCHANGE
+  post("/cancel_exchange", { :controller => "exchanges", :action => "cancel" })
 end

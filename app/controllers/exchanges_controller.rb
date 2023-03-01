@@ -4,7 +4,7 @@ class ExchangesController < ApplicationController
 
     @list_of_exchanges_received = matching_exchanges.order({ :created_at => :desc }).where({:id_receiver => session[:user_id]}).where({:status => "pending"})
 
-    @list_of_exchanges_sent = matching_exchanges.order({ :created_at => :desc }).where({:id_sender => session[:user_id]})
+    @list_of_exchanges_sent = matching_exchanges.order({ :created_at => :desc }).where({:id_sender => session[:user_id]}).where({:status => "pending"})
 
     render({ :template => "exchanges/index.html.erb" })
   end
@@ -56,12 +56,27 @@ class ExchangesController < ApplicationController
   end
 
   def destroy
+    
     the_id = params.fetch("path_id")
     the_exchange = Exchange.where({ :id => the_id }).at(0)
 
     the_exchange.destroy
 
     redirect_to("/exchanges", { :notice => "Exchange deleted successfully."} )
+  end
+
+  def cancel
+    the_id = params.fetch("query_exchange_id")
+    the_exchange = Exchange.where({ :id => the_id }).at(0)
+
+    the_exchange.status = params.fetch("query_exchange_status")
+
+    if the_exchange.valid?
+      the_exchange.save
+      redirect_to("/exchanges", { :notice => "Cancelled successfully."} )
+    else
+      redirect_to("/exchanges", { :alert => the_exchange.errors.full_messages.to_sentence })
+    end
   end
 
   def close
@@ -99,11 +114,11 @@ class ExchangesController < ApplicationController
           sender_card_to_give.destroy
           receiver_card_to_give.destroy
 
-          
+
           redirect_to("/exchanges", { :notice => "Exchanged successfully."} )
         else
           redirect_to("/exchanges", { :alert => sender_collection.errors.full_messages.to_sentence })
-          end
+        end
       else
         
         #### NEED TO CREATE SUBTRACT
