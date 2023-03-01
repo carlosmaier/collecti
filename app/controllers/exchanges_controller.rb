@@ -2,11 +2,11 @@ class ExchangesController < ApplicationController
   def index
     matching_exchanges = Exchange.all
 
-    @list_of_exchanges_received = matching_exchanges.order({ :created_at => :desc }).where({:id_receiver => session[:user_id]}).where({:status => "pending"})
+    @list_of_exchanges_received = matching_exchanges.order({ :created_at => :asc }).where({:id_receiver => session[:user_id]}).where({:status => "pending"})
 
-    @list_of_exchanges_sent = matching_exchanges.order({ :created_at => :desc }).where({:id_sender => session[:user_id]}).where({:status => "pending"})
+    @list_of_exchanges_sent = matching_exchanges.order({ :created_at => :asc }).where({:id_sender => session[:user_id]}).where({:status => "pending"})
 
-    @list_of_exchanges_past = matching_exchanges.order({ :created_at => :desc }).where({:id_sender => session[:user_id]}).where.not({:status => "pending"}).or(matching_exchanges.order({ :created_at => :desc }).where({:id_receiver => session[:user_id]}).where.not({:status => "pending"}))
+    @list_of_exchanges_past = matching_exchanges.order({ :created_at => :asc }).where({:id_sender => session[:user_id]}).where.not({:status => "pending"}).or(matching_exchanges.order({ :created_at => :asc }).where({:id_receiver => session[:user_id]}).where.not({:status => "pending"}))
 
 
     render({ :template => "exchanges/index.html.erb" })

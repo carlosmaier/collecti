@@ -69,8 +69,12 @@ class CollectionsController < ApplicationController
     card_number = params.fetch("query_card_number")
 
     the_collection = Collection.where({:id_user => id_user}).where({:id_album => id_album }).where({ :card_number => card_number}).first
-    the_collection.destroy
 
-    redirect_to("/albums/#{id_album}", { :notice => "Collection deleted successfully."} )
+    if the_collection != nil
+      the_collection.destroy
+      redirect_to("/albums/#{id_album}", { :notice => "Collection deleted successfully."} )
+    else end
+      redirect_to("/albums/#{id_album}", { :alert => "Card not found in collection" })
+
   end
 end
