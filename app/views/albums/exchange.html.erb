@@ -16,13 +16,10 @@
 
 <div>
   <div>
-    <h2>Users who have card repeated:</h2>
+    <h2>Users who have card <%= @card_number %> repeated:</h2>
     <table border="1">
       <tr>
-        <th>
-          ID
-        </th>
-      
+        
         <th>
           Name
         </th>
@@ -50,10 +47,7 @@
       
         <% @exchange_hash.fetch(a_collector).keys.each do |a_card| %>
           <tr>
-            <td>
-              <%= a_collector %>
-            </td>
-
+            
             <td>
               <%= User.full_name(a_collector) %>            
             </td>
@@ -82,6 +76,4 @@
       <% end %>
     </table>
   </div>
-  My repeated cards: <%= @repeated_cards_hash %>
-  Hash: <%= @exchange_hash%>
 </div>

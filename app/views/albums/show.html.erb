@@ -50,11 +50,11 @@
         </th>
 
         <th>
-          Users with repeated card:
+          Repeated card:
         </th>
 
         <th>
-          Users looking for this card:
+          Missing card:
         </th>
 
         <th>
@@ -70,27 +70,29 @@
         </td>
 
         <td>
-          <% if @list_of_cards.count(card_number) != 0 %>
+          <% if @list_of_cards.count(card_number) == 1 %>
+            1 card
+          <% elsif @list_of_cards.count(card_number) != 0 %>
             <%= @list_of_cards.count(card_number) %> cards
-          <% else %>
-            <%= "" %>
-          <% end %>
+          <% else end %>
         </td>
 
         <td>
           <% collectors_card = @list_of_collections.where({ card_number: card_number }).where.not({ id_user: session[:user_id]}).map_relation_to_array(:id_user) %>
           <% collectors_repeated_card = collectors_card.find_all { |e| collectors_card.count(e) > 1 } %>
           <% number_of_collectors_repeated = collectors_repeated_card.uniq.count %>
-          <% if number_of_collectors_repeated != 0 %>
+          <% if number_of_collectors_repeated == 1 %>
+              1 user
+          <% elsif number_of_collectors_repeated != 0 %>
               <%= number_of_collectors_repeated %> users
-          <% else %>
-              <%= "" %>
           <% end %>
         </td>
 
         <td>
           <% collectors_no_card = @list_of_collections.where.not({:id_user => session.fetch(:user_id)}).where({ card_number: card_number }).map_relation_to_array(:id_user).uniq.count %>
-          <% if @list_of_collectors.uniq.count - collectors_no_card != 0 %>
+          <% if @list_of_collectors.uniq.count - collectors_no_card == 1 %>
+             1 user
+          <% elsif @list_of_collectors.uniq.count - collectors_no_card != 0 %>
              <%= @list_of_collectors.uniq.count - collectors_no_card %> users
           <% else end %>
         </td>
