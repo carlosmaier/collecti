@@ -1,14 +1,9 @@
-<div>
-  <a href="/albums/<%= @the_album.id %>">
-    Go back to album
-  </a>
-</div>
 
 <div>
   <div>
-    <h1>
-      <%= @the_album.name %> | Card: <%= @card_number %>
-    </h1>
+    <h4>
+      <%= @the_album.name %>
+    </h4>
   </div>
 </div>
 
@@ -16,10 +11,10 @@
 
 <div>
   <div>
-    <h2>Users who have card <%= @card_number %> repeated:</h2>
-    <table border="1">
+    <h5>Possible trades to get Card #<%= @card_number %>:</h5>
+    <hr>
+    <table class="table table-hover">
       <tr>
-        
         <th>
           Name
         </th>
@@ -33,7 +28,7 @@
         </th>
 
         <th>
-          How many you have
+          Your inventory
         </th>
 
         <th>
@@ -57,11 +52,11 @@
             </td>
 
             <td>
-              <%= a_card %>
+              Card #<%= a_card %>
             </td>
 
             <td>
-              <%= @exchange_hash.fetch(a_collector).fetch(a_card) %>
+              <%= @exchange_hash.fetch(a_collector).fetch(a_card) %> cards
             </td>
 
             <td>
@@ -69,44 +64,39 @@
               <% check = Exchange.check_request(@the_album.id, session[:user_id], a_card, user.id, @card_number) %>
               <% if check == false %>
                 <form action="/insert_exchange" method="post">
-                  <div>
-                    <label for="id_album_box"></label>
-                    <input type="hidden" value="<%= @the_album.id %>" id="id_album_box" name="query_album_id">
-                  </div>
 
-                  <div>
-                    <label for="id_sender_box"></label>
-                    <input type="hidden" value="<%= session[:user_id] %>" id="id_sender_box" name="query_id_sender">
-                  </div>
+                  <label for="id_album_box"></label>
+                  <input type="hidden" value="<%= @the_album.id %>" id="id_album_box" name="query_album_id">
 
-                  <div>
-                    <label for="id_card_sender_box"></label>
-                    <input type="hidden" value="<%= a_card %>" id="id_card_sender_box" name="query_card_number_to_send">
-                  </div>
+                  <label for="id_sender_box"></label>
+                  <input type="hidden" value="<%= session[:user_id] %>" id="id_sender_box" name="query_id_sender">
 
-                  <div>
-                    <label for="id_receiver_box"></label>
-                    <input type="hidden" value="<%= user.id %>" id="id_receiver_box" name="query_id_receiver">
-                  </div>
-
-                  <div>
-                    <label for="id_card_receiver_box"></label>
-                    <input type="hidden" value="<%= @card_number %>" id="id_card_receiver_box" name="query_card_number_to_receive">
-                  </div>
+                  <label for="id_card_sender_box"></label>
+                  <input type="hidden" value="<%= a_card %>" id="id_card_sender_box" name="query_card_number_to_send">
+                                    
+                  <label for="id_receiver_box"></label>
+                  <input type="hidden" value="<%= user.id %>" id="id_receiver_box" name="query_id_receiver">
+                  
+                  <label for="id_card_receiver_box"></label>
+                  <input type="hidden" value="<%= @card_number %>" id="id_card_receiver_box" name="query_card_number_to_receive">
 
                   <button class="btn btn-primary btn-sm">Send exchange request</button>
                 </form>
               <% else %>
-                  <form action="/exchanges">
-                    <button class="btn btn-secondary btn-sm">Check request status</button>
-                  </form> 
+                <form action="/exchanges">
+                  <button class="btn btn-secondary btn-sm">Check request status</button>
+                </form> 
               <% end %>
             </td>
           </tr>
-
         <% end %>
-
       <% end %>
     </table>
   </div>
+</div>
+
+<div>
+  <a href="/albums/<%= @the_album.id %>">
+    Go back to album
+  </a>
 </div>

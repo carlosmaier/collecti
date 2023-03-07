@@ -1,8 +1,8 @@
 <div>
   <div>
-    <h1>
+    <h4>
       Your exchanges
-    </h1>
+    </h4>
   </div>
 </div>
 
@@ -12,13 +12,9 @@
 
 <div>
   <div>
-    <h2>Received requests</h2>
-    <table border="1">
+    <h5>Received requests</h5>
+    <table class="table table-hover">
       <tr>
-
-        <th>
-          Status
-        </th>
 
         <th>
           Album
@@ -37,23 +33,21 @@
         </th>
 
         <th>
-          Inventory
+          Your inventory
         </th>
 
         <th>
-          Request received
+          Date
         </th>
 
         <th>
+          Status
         </th>
+
       </tr>
 
       <% @list_of_exchanges_received.each do |an_exchange| %>
       <tr>
-        
-        <td>
-          <%= an_exchange.status.capitalize %>
-        </td>
 
         <td>
           <%= Album.where({ id: an_exchange.album_id}).first.name %>
@@ -82,26 +76,24 @@
 
         <td>
           <form action="/close_exchange" method="post">
-            <div>
+            
               <label for="id_exchange_box"></label>
               <input type="hidden" value="<%= an_exchange.id %>" id="id_exchange_box" name="query_exchange_id">
-            </div>
-            <div>
+            
               <label for="status_exchange_box"></label>
               <input type="hidden" value="<%= "accepted" %>" id="status_exchange_box" name="query_exchange_status">
-            </div>
+            
             <button class="btn btn-primary btn-sm">Accept</button>
           </form>
 
           <form action="/close_exchange" method="post">
-            <div>
+            
               <label for="id_exchange_box"></label>
               <input type="hidden" value="<%= an_exchange.id %>" id="id_exchange_box" name="query_exchange_id">
-            </div>
-            <div>
+            
               <label for="status_exchange_box"></label>
               <input type="hidden" value="<%= "declined" %>" id="status_exchange_box" name="query_exchange_status">
-            </div>
+            
             <button class="btn btn-danger btn-sm">Decline</button>
           </form>
         </td>
@@ -115,13 +107,9 @@
 
 <div>
   <div>
-    <h2>Sent requests</h2>
-    <table border="1">
+    <h5>Sent requests</h5>
+    <table class="table table-hover">
       <tr>
-
-        <th>
-          Status
-        </th>
 
         <th>
           Album
@@ -140,24 +128,22 @@
         </th>
 
         <th>
-          Inventory
+          Your inventory
         </th>
 
         <th>
-          Request sent
+          Date
         </th>
 
         <th>
+          Status
         </th>
+
       </tr>
 
       <% @list_of_exchanges_sent.each do |an_exchange| %>
       <tr>
         
-        <td>
-          <%= an_exchange.status.capitalize %>
-        </td>
-
         <td>
           <%= Album.where({ id: an_exchange.album_id}).first.name %>
         </td>
@@ -185,14 +171,13 @@
 
         <td>
           <form action="/cancel_exchange" method="post">
-            <div>
+            
               <label for="id_exchange_box"></label>
               <input type="hidden" value="<%= an_exchange.id %>" id="id_exchange_box" name="query_exchange_id">
-            </div>
-            <div>
+            
               <label for="status_exchange_box"></label>
               <input type="hidden" value="<%= "cancelled" %>" id="status_exchange_box" name="query_exchange_status">
-            </div>
+            
             <button class="btn btn-danger btn-sm">Cancel request</button>
           </form>
         </td>
@@ -205,13 +190,9 @@
 
 <div>
   <div>
-    <h2>Past requests</h2>
-    <table border="1">
+    <h5>Past requests</h5>
+    <table class="table table-hover">
       <tr>
-
-        <th>
-          Status
-        </th>
 
         <th>
           Album
@@ -234,19 +215,18 @@
         </th>
 
         <th>
-          Last modified
+          Date
         </th>
 
+        <th>
+          Status
+        </th>
         
       </tr>
 
       <% @list_of_exchanges_past.each do |an_exchange| %>
       <tr>
         
-        <td>
-          <%= an_exchange.status.capitalize %>
-        </td>
-
         <td>
           <%= Album.where({ id: an_exchange.album_id}).first.name %>
         </td>
@@ -269,6 +249,14 @@
 
         <td>
           <%= time_ago_in_words(an_exchange.updated_at) %> ago
+        </td>
+
+        <td>
+          <% if an_exchange.status == "accepted" %>
+            <span class="badge rounded-pill bg-success"><%= an_exchange.status.capitalize %></span>
+          <% elsif an_exchange.status == "cancelled" %>
+            <span class="badge rounded-pill bg-danger"><%= an_exchange.status.capitalize %></span>
+          <% else end %>
         </td>
 
       <% end %>

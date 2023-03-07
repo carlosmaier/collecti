@@ -10,49 +10,52 @@
 
 <div>
   <div>
-    <table border="1">
-      <tr>
-        <th>
-          Name
-        </th>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">
+            Name
+          </th scope="col">
 
-        <th>
-          Cards
-        </th>
+          <th scope="col">
+            Cards
+          </th scope="col">
 
-        <th>
-        </th>
-      </tr>
+          <th scope="col">
+          </th scope="col">
+        </tr>
+      </thead>
+      <tbody>
+        <% @list_of_albums.each do |an_album| %>
+        <tr>
+        
+          <td>
+            <%= an_album.name %>
+          </td>
 
-      <% @list_of_albums.each do |an_album| %>
-      <tr>
-       
-        <td>
-          <%= an_album.name %>
-        </td>
+          <td>
+            <%= an_album.cards %>
+          </td>
 
-        <td>
-          <%= an_album.cards %>
-        </td>
-
-        <td>
-          
-          <% if @list_of_collections.include?(an_album.id) %>
+          <td>
             
-            <form action="/albums/<%= an_album.id %>">
-              <button class="btn btn-primary btn-sm">Go to your album</button>
-            </form>
-            
+            <% if @list_of_collections.include?(an_album.id) %>
+              
+              <form action="/albums/<%= an_album.id %>">
+                <button class="btn btn-primary btn-sm">Go to your album</button>
+              </form>
+              
 
-          <% else %>
-            <form action="/link_collection/<%= an_album.id %>">
-              <button class="btn btn-secondary btn-sm">Add album</button>
-            </form>
-            
-          <% end %>
-        </td>
-      </tr>
-      <% end %>
+            <% else %>
+              <form action="/link_collection/<%= an_album.id %>">
+                <button class="btn btn-secondary btn-sm">Add album</button>
+              </form>
+              
+            <% end %>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
     </table>
   </div>
 </div>
@@ -62,23 +65,19 @@
 <% if @current_user.id == 1 %>
   <div>
     <div>
-      <h4>Add a new album (ADMIN)</h4>
+      <h5>Add a new album (ADMIN)</h5>
 
       <form action="/insert_album" method="post">
-        <div>
-          <label for="name_box">
-            Name
-          </label>
-
-          <input type="text" id="name_box" name="query_name">
+        <div class="input-group mb-3">
+          <span class="input-group-text">Name of the album:</span>
+          <input class="form-control" type="text" id="name_box" name="query_name" placeholder="NBA 2023">
+          <label for="name_box"></label>
         </div>
 
-        <div>
-          <label for="cards_box">
-            Cards
-          </label>
-
-          <input type="text" id="cards_box" name="query_cards">
+        <div class="input-group mb-3">
+          <span class="input-group-text">Number of cards in album:</span>
+          <input class="form-control" type="number" min="1" id="cards_box" name="query_cards" placeholder="18">
+          <label for="cards_box"></label>
         </div>
 
         <button class="btn btn-primary btn-sm">

@@ -1,14 +1,14 @@
-<h1>Sign in</h1>
+<h4>Sign in</h4>
 
 <form action="/user_verify_credentials" method="post">
-  <div>
-    <label for="email_box">Email</label>
-    <input id="email_box" name="query_email" placeholder="Enter your email..." type="text">
+  <div class="form-floating mb-3">
+    <input class="form-control" id="email_box" name="query_email" placeholder="name@example.co" type="email">
+    <label for="email_box">Email address</label>
   </div>
 
   <div>
-    <label for="password_box">Password</label>
-    <input id="password_box" name="query_password" placeholder="Enter your password..." type="password">
+    <input class="form-control" id="password_box" name="query_password" placeholder="Enter your password..." type="password">
+    <label for="password_box"></label>
   </div>
 
   <button class="btn btn-primary btn-sm">

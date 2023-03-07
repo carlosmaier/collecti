@@ -1,45 +1,44 @@
-<h1>Sign up</h1>
+<h4>Sign up</h4>
 
 <hr>
 
 <form action="/insert_user" method="post">
 
-  <div>
-    <label for="email_box">Email</label>
-    <input id="email_box" name="query_email" placeholder="Choose a email..." type="text">
+  <div class="form-group" >
+    <label class="form-label mt-4" for="email_box">Email</label>
+    <input class="form-control" id="email_box" name="query_email" placeholder="Choose a email..." type="email">
+    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
   </div>
                  
   <div>
-    <label for="first_name_box">First name</label>
-      
-    <input type="text" id="first_name_box" name="query_first_name">
+    <label class="form-label mt-4" for="first_name_box">First name</label>
+    <input class="form-control" type="text" id="first_name_box" name="query_first_name">
   </div>
          
   <div>
-    <label for="last_name_box">Last name</label>
-      
-    <input type="text" id="last_name_box" name="query_last_name">
+    <label class="form-label mt-4" for="last_name_box">Last name</label>
+    <input class="form-control" type="text" id="last_name_box" name="query_last_name">
   </div>
          
   <div>
-    <label for="zip_code_box">Zip code</label>
-      
-    <input type="text" id="zip_code_box" name="query_zip_code">
+    <label class="form-label mt-4" for="zip_code_box">Zip code</label>
+    <input class="form-control" type="number" min="1" id="zip_code_box" name="query_zip_code">
   </div>
     
   <div>
-    <label for="password_box">Password</label>
-    <input id="password_box" name="query_password" placeholder="Choose a password..." type="password">
+    <label class="form-label mt-4" for="password_box">Password</label>
+    <input class="form-control" id="password_box" name="query_password" placeholder="Choose a password..." type="password">
   </div>
 
   <div>
-    <label for="password_confirmation_box">Password Confirmation</label>
-    <input id="password_confirmation_box" name="query_password_confirmation" placeholder="Confirm your password..." type="password">
+    <label class="form-label mt-4" for="password_confirmation_box">Password Confirmation</label>
+    <input class="form-control" id="password_confirmation_box" name="query_password_confirmation" placeholder="Confirm your password..." type="password">
   </div>
-
-  <button class="btn btn-primary btn-sm">
-    Sign up
-  </button>
+  <div>
+    <button class="btn btn-primary btn-sm">
+      Sign up
+    </button>
+  </div>
 </form>
 
 <hr>
