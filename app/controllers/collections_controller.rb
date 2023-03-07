@@ -73,8 +73,9 @@ class CollectionsController < ApplicationController
     if the_collection != nil
       the_collection.destroy
       redirect_to("/albums/#{id_album}", { :notice => "Collection deleted successfully."} )
-    else end
+    else
       redirect_to("/albums/#{id_album}", { :alert => "Card not found in collection" })
+    end
 
   end
 end

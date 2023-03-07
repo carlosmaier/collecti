@@ -94,11 +94,11 @@
                     <input type="hidden" value="<%= @card_number %>" id="id_card_receiver_box" name="query_card_number_to_receive">
                   </div>
 
-                  <button>Send exchange request</button>
+                  <button class="btn btn-primary btn-sm">Send exchange request</button>
                 </form>
               <% else %>
                   <form action="/exchanges">
-                    <button >Check request status</button>
+                    <button class="btn btn-secondary btn-sm">Check request status</button>
                   </form> 
               <% end %>
             </td>

@@ -1,8 +1,8 @@
 <div>
   <div>
-    <h1>
+    <h4>
       Find your album
-    </h1>
+    </h4>
   </div>
 </div>
 
@@ -10,7 +10,6 @@
 
 <div>
   <div>
-    <h2></h2>
     <table border="1">
       <tr>
         <th>
@@ -40,15 +39,17 @@
           
           <% if @list_of_collections.include?(an_album.id) %>
             
-            <a href="/albums/<%= an_album.id %>">
-              Go to your album
-            </a>
+            <form action="/albums/<%= an_album.id %>">
+              <button class="btn btn-primary btn-sm">Go to your album</button>
+            </form>
+            
 
-            <% else %>
-            <a href="/link_collection/<%= an_album.id %>">
-              Add album
-            </a>
-            <% end %>
+          <% else %>
+            <form action="/link_collection/<%= an_album.id %>">
+              <button class="btn btn-secondary btn-sm">Add album</button>
+            </form>
+            
+          <% end %>
         </td>
       </tr>
       <% end %>
@@ -61,9 +62,7 @@
 <% if @current_user.id == 1 %>
   <div>
     <div>
-      <h2>
-        Add a new album (ADMIN)
-      </h2>
+      <h4>Add a new album (ADMIN)</h4>
 
       <form action="/insert_album" method="post">
         <div>
@@ -82,7 +81,7 @@
           <input type="text" id="cards_box" name="query_cards">
         </div>
 
-        <button>
+        <button class="btn btn-primary btn-sm">
           Create album
         </button>
       </form>

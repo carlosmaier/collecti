@@ -90,7 +90,7 @@
               <label for="status_exchange_box"></label>
               <input type="hidden" value="<%= "accepted" %>" id="status_exchange_box" name="query_exchange_status">
             </div>
-            <button >Accept</button>
+            <button class="btn btn-primary btn-sm">Accept</button>
           </form>
 
           <form action="/close_exchange" method="post">
@@ -102,7 +102,7 @@
               <label for="status_exchange_box"></label>
               <input type="hidden" value="<%= "declined" %>" id="status_exchange_box" name="query_exchange_status">
             </div>
-            <button >Decline</button>
+            <button class="btn btn-danger btn-sm">Decline</button>
           </form>
         </td>
       </tr>
@@ -193,7 +193,7 @@
               <label for="status_exchange_box"></label>
               <input type="hidden" value="<%= "cancelled" %>" id="status_exchange_box" name="query_exchange_status">
             </div>
-            <button >Cancel request</button>
+            <button class="btn btn-danger btn-sm">Cancel request</button>
           </form>
         </td>
       <% end %>
