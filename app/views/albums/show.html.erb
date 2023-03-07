@@ -1,23 +1,23 @@
 
 <div class="text-center">
-<div>
   <div>
-    <h4>
-      <%= @the_album.name %>
-    </h4>
+    <div>
+      <h4>
+        <%= @the_album.name %>
+      </h4>
+    </div>
   </div>
-</div>
 
-<div>
-    <em>Cards missing to complete album: <%= @the_album.cards - @list_of_cards.uniq.count %> | Album completion: <%= 100*@list_of_cards.uniq.count/@the_album.cards %>% </em>
-</div>
-
-<hr>
-
-<div class="progress">
-  <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-label="Basic example" style="width: <%= 100*@list_of_cards.uniq.count/@the_album.cards %>%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+  <div>
+      <em>Progress: <%= 100*@list_of_cards.uniq.count/@the_album.cards %>% (<%= @the_album.cards - @list_of_cards.uniq.count %> cards missing)</em>
   </div>
-</div>
+
+  <hr>
+
+  <div class="progress">
+    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-label="Basic example" style="width: <%= 100*@list_of_cards.uniq.count/@the_album.cards %>%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+    </div>
+  </div>
 
   <div style="display: inline-flex;">
     <div style="margin-right: 10px;">
@@ -59,88 +59,87 @@
     </div>
   </div>
 
-<hr>
+  <hr>
+  <p>My collection</p>
 
-<div>My album</div>
-
-<div>
   <div>
-    <table class="table table-hover">
-      <thead>
+    <div>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th width="20%">
+              Card #
+            </th>
+
+            <th width="20%">
+              My inventory<br><small><em>(# of cards)</em></small>
+            </th>
+
+            <th width="20%">
+              Hold repeated card<br><small><em>(# of collectors)</em></small>
+            </th>
+
+            <th width="20%">
+              Do not hold card<br><small><em>(# of collectors)</em></small>
+            </th>
+
+            <th width="20%">
+              Action
+            </th>
+          </tr>
+        </thead>
+        <% @the_album.cards.times do |a_card| %>
         <tr>
-          <th width="20%">
-            Card #
-          </th>
+          <td>
+            <% card_number = a_card + 1 %>
+            # <%= card_number.to_s %>
+          </td>
 
-          <th width="20%">
-            My inventory<br><small><em>(# of cards)</em></small>
-          </th>
+          <td>
+            <% if @list_of_cards.count(card_number) == 1 %>
+              <span class="badge bg-success rounded-pill">1</span>
+            <% elsif @list_of_cards.count(card_number) != 0 %>
+              <span class="badge bg-success rounded-pill"><%= @list_of_cards.count(card_number) %></span>
+            <% else end %>
+          </td>
 
-          <th width="20%">
-            Hold repeated card<br><small><em>(# of collectors)</em></small>
-          </th>
+          <td>
+            <% collectors_card = @list_of_collections.where({ card_number: card_number }).where.not({ id_user: session[:user_id]}).map_relation_to_array(:id_user) %>
+            <% collectors_repeated_card = collectors_card.find_all { |e| collectors_card.count(e) > 1 } %>
+            <% number_of_collectors_repeated = collectors_repeated_card.uniq.count %>
+            <% if number_of_collectors_repeated == 1 %>
+                <span class="badge bg-secondary rounded-pill">1</span>
+            <% elsif number_of_collectors_repeated != 0 %>
+                <span class="badge bg-secondary rounded-pill"><%= number_of_collectors_repeated %></span>
+            <% end %>
+          </td>
 
-          <th width="20%">
-            Do not hold card<br><small><em>(# of collectors)</em></small>
-          </th>
-
-          <th width="20%">
-            Action
-          </th>
-        </tr>
-      </thead>
-      <% @the_album.cards.times do |a_card| %>
-      <tr>
-        <td>
-          <% card_number = a_card + 1 %>
-          # <%= card_number.to_s %>
-        </td>
-
-        <td>
-          <% if @list_of_cards.count(card_number) == 1 %>
-            <span class="badge bg-success rounded-pill">1</span>
-          <% elsif @list_of_cards.count(card_number) != 0 %>
-            <span class="badge bg-success rounded-pill"><%= @list_of_cards.count(card_number) %></span>
-          <% else end %>
-        </td>
-
-        <td>
-          <% collectors_card = @list_of_collections.where({ card_number: card_number }).where.not({ id_user: session[:user_id]}).map_relation_to_array(:id_user) %>
-          <% collectors_repeated_card = collectors_card.find_all { |e| collectors_card.count(e) > 1 } %>
-          <% number_of_collectors_repeated = collectors_repeated_card.uniq.count %>
-          <% if number_of_collectors_repeated == 1 %>
+          <td>
+            <% collectors_no_card = @list_of_collections.where.not({:id_user => session.fetch(:user_id)}).where({ card_number: card_number }).map_relation_to_array(:id_user).uniq.count %>
+            <% if @list_of_collectors.uniq.count - collectors_no_card == 1 %>
               <span class="badge bg-secondary rounded-pill">1</span>
-          <% elsif number_of_collectors_repeated != 0 %>
-              <span class="badge bg-secondary rounded-pill"><%= number_of_collectors_repeated %></span>
-          <% end %>
-        </td>
+            <% elsif @list_of_collectors.uniq.count - collectors_no_card != 0 %>
+              <span class="badge bg-secondary rounded-pill"><%= @list_of_collectors.uniq.count - collectors_no_card %></span>
+            <% else end %>
+          </td>
 
-        <td>
-          <% collectors_no_card = @list_of_collections.where.not({:id_user => session.fetch(:user_id)}).where({ card_number: card_number }).map_relation_to_array(:id_user).uniq.count %>
-          <% if @list_of_collectors.uniq.count - collectors_no_card == 1 %>
-             <span class="badge bg-secondary rounded-pill">1</span>
-          <% elsif @list_of_collectors.uniq.count - collectors_no_card != 0 %>
-             <span class="badge bg-secondary rounded-pill"><%= @list_of_collectors.uniq.count - collectors_no_card %></span>
-          <% else end %>
-        </td>
+          <td>
+            <% if number_of_collectors_repeated == 1 %>
+                <form action="/albums/<%= @the_album.id %>/<%= card_number %>" method="get">
+                  <button class="btn btn-secondary btn-sm" style="min-width: 120px;">Explore trade</button>
+                </form>
+            <% elsif number_of_collectors_repeated != 0 %>
+                <form action="/albums/<%= @the_album.id %>/<%= card_number %>" method="get">
+                  <button class="btn btn-secondary btn-sm" style="min-width: 120px;">Explore trades</button>
+                </form>
+            <% else end %>              
+          </td>
 
-        <td>
-          <% if number_of_collectors_repeated == 1 %>
-              <form action="/albums/<%= @the_album.id %>/<%= card_number %>" method="get">
-                <button class="btn btn-secondary btn-sm" style="min-width: 120px;">Explore trade</button>
-              </form>
-          <% elsif number_of_collectors_repeated != 0 %>
-              <form action="/albums/<%= @the_album.id %>/<%= card_number %>" method="get">
-                <button class="btn btn-secondary btn-sm" style="min-width: 120px;">Explore trades</button>
-              </form>
-          <% else end %>              
-        </td>
-
-      </tr>
-      <% end %>
-    </table>
+        </tr>
+        <% end %>
+      </table>
+    </div>
   </div>
-</div>
 
 </div>
 

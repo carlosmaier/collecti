@@ -19,11 +19,11 @@
 
   <body>
 
-    <div class="container py-5">
+    <div>
     
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container-fluid">
-          <a class="navbar-brand" href="/"><strong>Collecti</strong></a>
+          <a class="navbar-brand" href="/"><em><strong>Collecti</strong></em></a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -49,7 +49,7 @@
                     <div class="dropdown-divider"></div>
                   </div>
                 </li>
-
+                
                 <li class="nav-item">
                   <a class="nav-link" href="/user_sign_out">Sign out</a>
                 </li>
@@ -75,4 +75,6 @@
       <%= yield %>
     </div>
   </body>
+
+  <div class="text-center" ><small><em><p>Copyright: Carlos Maier 2023</p></em></small></div>
 </html>

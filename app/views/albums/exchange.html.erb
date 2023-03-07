@@ -80,11 +80,11 @@
                   <label for="id_card_receiver_box"></label>
                   <input type="hidden" value="<%= @card_number %>" id="id_card_receiver_box" name="query_card_number_to_receive">
 
-                  <button class="btn btn-primary btn-sm" style="min-width: 120px; margin: 0 auto;">Send exchange request</button>
+                  <button class="btn btn-primary btn-sm" style="min-width: 160px">Send exchange request</button>
                 </form>
               <% else %>
                 <form action="/exchanges">
-                  <button class="btn btn-secondary btn-sm" style="min-width: 120px; margin: 0 auto;">Check request status</button>
+                  <button class="btn btn-secondary btn-sm" style="min-width: 160px">Check request status</button>
                 </form> 
               <% end %>
             </td>
