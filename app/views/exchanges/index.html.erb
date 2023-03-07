@@ -1,3 +1,4 @@
+<div class="text-center">
 <div>
   <div>
     <h4>
@@ -12,7 +13,7 @@
 
 <div>
   <div>
-    <h5>Received requests</h5>
+    <div style="padding-top: 10px;"><h5>Received requests</h5></div>
     <table class="table table-hover">
       <tr>
 
@@ -107,7 +108,7 @@
 
 <div>
   <div>
-    <h5>Sent requests</h5>
+    <div style="padding-top: 10px;"><h5>Sent requests</h5></div>
     <table class="table table-hover">
       <tr>
 
@@ -190,7 +191,7 @@
 
 <div>
   <div>
-    <h5>Past requests</h5>
+    <div style="padding-top: 10px;"><h5>Past requests</h5></div>
     <table class="table table-hover">
       <tr>
 
@@ -255,7 +256,7 @@
           <% if an_exchange.status == "accepted" %>
             <span class="badge rounded-pill bg-success"><%= an_exchange.status.capitalize %></span>
           <% elsif an_exchange.status == "cancelled" %>
-            <span class="badge rounded-pill bg-danger"><%= an_exchange.status.capitalize %></span>
+            <span class="badge rounded-pill bg-secondary"><%= an_exchange.status.capitalize %></span>
           <% else end %>
         </td>
 
@@ -265,3 +266,4 @@
 </div>
 
 <hr>
+</div>

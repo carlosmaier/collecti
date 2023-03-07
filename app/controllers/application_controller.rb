@@ -12,9 +12,10 @@ class ApplicationController < ActionController::Base
   
   def force_user_sign_in
     if @current_user == nil
-      redirect_to("/user_sign_in", { :notice => "You have to sign in first." })
+      redirect_to("/user_sign_in")
     end
   end
 
+  add_flash_types :info, :error, :success
 
 end
