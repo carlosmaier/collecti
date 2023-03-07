@@ -1,6 +1,6 @@
 
 <div>
-  <div>
+  <div class="text-center">
     <h4>
       <%= @the_album.name %>
     </h4>
@@ -10,29 +10,29 @@
 <hr>
 
 <div>
-  <div>
-    <h5>Possible trades to get Card #<%= @card_number %>:</h5>
+  <div class="text-center">
+    <h5>Possible trades to get <span class="badge bg-primary rounded-pill">Card #<%= @card_number %></span>:</h5>
     <hr>
     <table class="table table-hover">
       <tr>
-        <th>
-          Name
+        <th width="20%">
+          Name of<br>Collector
         </th>
 
-        <th>
-          Zip Code
+        <th width="20%">
+          Location<br><small><em>(Zip code)</em></small>
         </th>
 
-        <th>
-          Card this user needs
+        <th width="20%">
+          Collector<br>needs
         </th>
 
-        <th>
-          Your inventory
+        <th width="20%">
+          My inventory<br><small><em>(# of cards)</em></small>
         </th>
 
-        <th>
-          
+        <th width="20%">
+          Action
         </th>
       </tr>
 
@@ -52,11 +52,11 @@
             </td>
 
             <td>
-              Card #<%= a_card %>
+              <span class="badge bg-secondary rounded-pill">Card #<%= a_card %></span>
             </td>
 
             <td>
-              <%= @exchange_hash.fetch(a_collector).fetch(a_card) %> cards
+              <span class="badge bg-success rounded-pill"><%= @exchange_hash.fetch(a_collector).fetch(a_card) %> cards</span>
             </td>
 
             <td>
@@ -80,11 +80,11 @@
                   <label for="id_card_receiver_box"></label>
                   <input type="hidden" value="<%= @card_number %>" id="id_card_receiver_box" name="query_card_number_to_receive">
 
-                  <button class="btn btn-primary btn-sm">Send exchange request</button>
+                  <button class="btn btn-primary btn-sm" style="min-width: 120px; margin: 0 auto;">Send exchange request</button>
                 </form>
               <% else %>
                 <form action="/exchanges">
-                  <button class="btn btn-secondary btn-sm">Check request status</button>
+                  <button class="btn btn-secondary btn-sm" style="min-width: 120px; margin: 0 auto;">Check request status</button>
                 </form> 
               <% end %>
             </td>

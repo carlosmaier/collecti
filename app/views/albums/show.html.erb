@@ -1,4 +1,5 @@
 
+<div class="text-center">
 <div>
   <div>
     <h4>
@@ -7,17 +8,19 @@
   </div>
 </div>
 
+<div>
+    <em>Cards missing to complete album: <%= @the_album.cards - @list_of_cards.uniq.count %> | Album completion: <%= 100*@list_of_cards.uniq.count/@the_album.cards %>% </em>
+</div>
+
 <hr>
 
 <div class="progress">
-  <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-label="Basic example" style="width: <%= 100*@list_of_cards.uniq.count/@the_album.cards %>%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+  <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-label="Basic example" style="width: <%= 100*@list_of_cards.uniq.count/@the_album.cards %>%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+  </div>
 </div>
-<hr>
 
-  <div>
-    <h5>Cards missing to complete album: <%= @the_album.cards - @list_of_cards.uniq.count %> | People collecting album: <%= @list_of_collectors.count + 1 %> | Album completion: <%= 100*@list_of_cards.uniq.count/@the_album.cards %>% </h5>
-      
-    <div>
+  <div style="display: inline-flex;">
+    <div style="margin-right: 10px;">
       <form action="/insert_collection" method="post">
       
         <label for="id_user_box"></label>
@@ -29,8 +32,8 @@
         <label for="card_number_box"></label>
         
         <div class="input-group mb-3">
-          <input class="form-control" type="number" id="card_number_box" name="query_card_number" min="1" max=<%= @the_album.cards %> placeholder="Card number" aria-describedby="button-add_card" >
-          <button class="btn btn-primary btn-sm" id="button-add_card" >Add card</button>
+          <input class="form-control" type="number" id="card_number_box" name="query_card_number" min="1" max=<%= @the_album.cards %> placeholder="Card #" aria-describedby="button-add_card" >
+          <button class="btn btn-primary btn-sm" id="button-add_card" style="min-width: 100px;" >Add card</button>
         </div>
 
       </form>
@@ -48,38 +51,41 @@
         <label for="card_number_box"></label>
 
         <div class="input-group mb-3">
-          <input class="form-control" type="number" id="card_number_box" name="query_card_number" min="1" max=<%= @the_album.cards %> placeholder="Card number" aria-describedby="button-delete_card">        
-          <button class="btn btn-danger btn-sm" id="button-delete_card">Delete card</button>
+          <input class="form-control" type="number" id="card_number_box" name="query_card_number" min="1" max=<%= @the_album.cards %> placeholder="Card #" aria-describedby="button-delete_card">        
+          <button class="btn btn-danger btn-sm" id="button-delete_card" style="min-width: 100px;">Delete card</button>
         </div>
       </form>
+    </div>
     </div>
   </div>
 
 <hr>
+
+<div>My album</div>
 
 <div>
   <div>
     <table class="table table-hover">
       <thead>
         <tr>
-          <th>
-            # Card
+          <th width="20%">
+            Card #
           </th>
 
-          <th>
-            Your inventory:
+          <th width="20%">
+            My inventory<br><small><em>(# of cards)</em></small>
           </th>
 
-          <th>
-            Users who have card repeated:
+          <th width="20%">
+            Hold repeated card<br><small><em>(# of collectors)</em></small>
           </th>
 
-          <th>
-            Users who don't hold card:
+          <th width="20%">
+            Do not hold card<br><small><em>(# of collectors)</em></small>
           </th>
 
-          <th>
-            
+          <th width="20%">
+            Action
           </th>
         </tr>
       </thead>
@@ -87,14 +93,14 @@
       <tr>
         <td>
           <% card_number = a_card + 1 %>
-          <%= card_number.to_s %>
+          # <%= card_number.to_s %>
         </td>
 
         <td>
           <% if @list_of_cards.count(card_number) == 1 %>
-            1 card
+            <span class="badge bg-success rounded-pill">1</span>
           <% elsif @list_of_cards.count(card_number) != 0 %>
-            <%= @list_of_cards.count(card_number) %> cards
+            <span class="badge bg-success rounded-pill"><%= @list_of_cards.count(card_number) %></span>
           <% else end %>
         </td>
 
@@ -103,29 +109,29 @@
           <% collectors_repeated_card = collectors_card.find_all { |e| collectors_card.count(e) > 1 } %>
           <% number_of_collectors_repeated = collectors_repeated_card.uniq.count %>
           <% if number_of_collectors_repeated == 1 %>
-              1 user
+              <span class="badge bg-secondary rounded-pill">1</span>
           <% elsif number_of_collectors_repeated != 0 %>
-              <%= number_of_collectors_repeated %> users
+              <span class="badge bg-secondary rounded-pill"><%= number_of_collectors_repeated %></span>
           <% end %>
         </td>
 
         <td>
           <% collectors_no_card = @list_of_collections.where.not({:id_user => session.fetch(:user_id)}).where({ card_number: card_number }).map_relation_to_array(:id_user).uniq.count %>
           <% if @list_of_collectors.uniq.count - collectors_no_card == 1 %>
-             1 user
+             <span class="badge bg-secondary rounded-pill">1</span>
           <% elsif @list_of_collectors.uniq.count - collectors_no_card != 0 %>
-             <%= @list_of_collectors.uniq.count - collectors_no_card %> users
+             <span class="badge bg-secondary rounded-pill"><%= @list_of_collectors.uniq.count - collectors_no_card %></span>
           <% else end %>
         </td>
 
         <td>
           <% if number_of_collectors_repeated == 1 %>
               <form action="/albums/<%= @the_album.id %>/<%= card_number %>" method="get">
-                <button class="btn btn-secondary btn-sm">See user</button>
+                <button class="btn btn-secondary btn-sm" style="min-width: 120px;">Explore trade</button>
               </form>
           <% elsif number_of_collectors_repeated != 0 %>
               <form action="/albums/<%= @the_album.id %>/<%= card_number %>" method="get">
-                <button class="btn btn-secondary btn-sm">See users</button>
+                <button class="btn btn-secondary btn-sm" style="min-width: 120px;">Explore trades</button>
               </form>
           <% else end %>              
         </td>
@@ -135,6 +141,9 @@
     </table>
   </div>
 </div>
+
+</div>
+
 <hr>
 
 <% if @current_user.id == 1 %>
@@ -157,16 +166,14 @@
           <input class="form-control" type="number" id="cards_box" name="query_cards" value="<%= @the_album.cards %>">
           <label for="cards_box"></label>
         </div>
-        
-        <button class="btn btn-primary btn-sm">Update album</button>
-        
+
+        <div style="display: inline-flex;">
+          <button style="margin-right: 10px;" class="btn btn-primary btn-sm">Update album</button>
+          <form action="/delete_album/<%= @the_album.id %>">
+            <button class="btn btn-danger btn-sm">Delete album</button>
+          </form>
+        </div>
       </form>
-      <hr>
-      <div>
-        <form action="/delete_album/<%= @the_album.id %>">
-          <button class="btn btn-danger btn-sm">Delete album</button>
-        </form>
-      </div>
     </div>
   </div>
   <hr>
